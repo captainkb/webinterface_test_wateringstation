@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+      <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <link media="all" rel="stylesheet" href="/static/basic_style.css">
+    <script>
+    var input = document.getElementById('toggleswitch');
+    var outputtext = document.getElementById('status');
+    </script>
+</head>
+<body>
+
+
+<h1>Water Irrigation System</h1>
+
+<table>
+  <tr>
+    <th>Time</th>
+    <th>Volume Pumped</th>
+    <th>Pump Rate</th>
+    <th>Pump Total Time</th>
+    <th>Pump Active</th>
+  </tr>
+  {% for item in data %}
+  <tr>
+    <td>{{item[0]}}</td>
+    <td>{{item[1]}}</td>
+    <td>{{item[2]}}</td>
+    <td>{{item[3]}}</td>
+    <td>{{item[4]}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<div id="wrapper">
+    <div id="c1">
+        <div class="container">
+            <img id="img_position_3" src="/static/raspberry-pi.svg" />
+            <div class="container_2">
+                <p>Activate MQTT </p>
+                <br>
+                  <label class="toggle">
+                    <input id="toggleswitch_mqtt" type="checkbox">
+                    <span class="roundbutton"></span>
+                </label>
+                <button class="button" id="button_reboot_pi">Reboot Pi</button>
+            </div>
+        </div>
+        <div class="row_pumps">
+            <div class="column_pumps">
+                <label class="toggle">
+                    <input id="toggleswitch_pump1" type="checkbox">
+                    <span class="roundbutton"></span>
+                </label>
+                <img id="img_position_2" src="/static/water-pump.svg" />
+            <!-- Rounded switch -->
+            </div>
+            <div class="column_pumps">
+                <label class="toggle">
+                    <input id="toggleswitch_pump2" type="checkbox">
+                    <span class="roundbutton"></span>
+                </label>
+                <img id="img_position_2" src="/static/water-pump.svg" />
+            </div>
+            <div class="column_pumps">
+                <label class="toggle">
+                    <input id="toggleswitch_pump3" type="checkbox">
+                    <span class="roundbutton"></span>
+                </label>
+                <img id="img_position_2" src="/static/water-pump.svg" />
+            </div>
+            <div class="column_pumps">
+                <label class="toggle">
+                    <input id="toggleswitch_pump4" type="checkbox">
+                    <span class="roundbutton"></span>
+                </label>
+                <img id="img_position_2" src="/static/water-pump.svg" />
+            </div>
+        </div>
+
+        <h1></h1>
+        <div class="row_plants">
+            <div class="column_plants">
+                <img id="img_position_1" src="/static/plant.svg" />
+            </div>
+            <div class="column_plants">
+                <img id="img_position_1" src="/static/plant.svg" />
+            </div>
+            <div class="column_plants">
+                <img id="img_position_1" src="/static/plant.svg" />
+            </div>
+            <div class="column_plants">
+                <img id="img_position_1" src="/static/plant.svg" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script>
+  $(document).ready(function(){
+ var current_status;
+ var data_1 = {'status':current_status}
+ $('#toggleswitch_pump1').click(function(){
+ current_status = $('#toggleswitch_pump1').is(":checked");
+
+ status_a = $('#toggleswitch_pump1').is("checked")
+ $.ajax({
+   type : 'post',
+   url : "/get_toggled_status",
+   contentType: 'application/json;charset=UTF-8',
+   data :  JSON.stringify({'status':current_status})
+ });
+ console.log(current_status);
+  });
+});
+
+  $(document).ready(function(){
+ var current_status_pump2;
+ var data_1 = {'status_pump2':current_status_pump2}
+ $('#toggleswitch_pump2').click(function(){
+ current_status_pump2 = $('#toggleswitch_pump2').is(":checked");
+
+ status_a = $('#toggleswitch_pump2').is("checked")
+ $.ajax({
+   type : 'post',
+   url : "/get_toggled_status_2",
+   contentType: 'application/json;charset=UTF-8',
+   data :  JSON.stringify({'status_pump2':current_status_pump2})
+ });
+ console.log(current_status_pump2);
+  });
+});
+  $(document).ready(function(){
+ var current_status_pump3;
+ var data_1 = {'status_pump3':current_status_pump3}
+ $('#toggleswitch_pump3').click(function(){
+ current_status_pump3 = $('#toggleswitch_pump3').is(":checked");
+
+ status_a = $('#toggleswitch_pump3').is("checked")
+ $.ajax({
+   type : 'post',
+   url : "/get_toggled_status_3",
+   contentType: 'application/json;charset=UTF-8',
+   data :  JSON.stringify({'status_pump3':current_status_pump3})
+ });
+ console.log(current_status_pump3);
+  });
+ });
+  $(document).ready(function(){
+ var current_status_pump4;
+
+ $('#toggleswitch_pump4').click(function(){
+ current_status_pump4 = $('#toggleswitch_pump4').is(":checked");
+
+ status_a = $('#toggleswitch_pump4').is("checked")
+ $.ajax({
+   type : 'post',
+   url : "/get_toggled_status_4",
+   contentType: 'application/json;charset=UTF-8',
+   data :  JSON.stringify({'status_pump4':current_status_pump4})
+ });
+ console.log(current_status_pump4);
+  });
+});
+  $(document).ready(function(){
+ var activate_mqtt;
+
+ $('#toggleswitch_mqtt').click(function(){
+ activate_mqtt = $('#toggleswitch_mqtt').is(":checked");
+
+ $.ajax({
+   type : 'post',
+   url : "/get_toggled_status_mqtt",
+   contentType: 'application/json;charset=UTF-8',
+   data :  JSON.stringify({'mqtt_active':activate_mqtt})
+ });
+ console.log(activate_mqtt);
+  });
+});
+
+$(document).ready(function(){
+ var reboot_pi;
+
+ $('#button_reboot_pi').click(function(){
+
+$.ajax({
+   type : 'post',
+   url : "/reboot_pi"
+   })
+
+  });
+});
+</script>
+</html>

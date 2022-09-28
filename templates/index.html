@@ -1,0 +1,52 @@
+<html>
+  <body>
+    <head>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+      <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+      <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	  
+    </head>
+    <input id="toggle1" type="checkbox" class='toggle' checked data-toggle="toggle">
+    <div class='status'>Toggled</div>
+  </body>
+  <script>
+    $(document).ready(function(){
+ var current_status;
+ var data_1 = {'status':current_status}
+ $(".toggle").click(function(){
+ current_status = $('#toggleswitch_pump1').is(":checked");
+
+ status_a = $('#toggleswitch_pump1').is("checked")
+ $.ajax({
+   type : 'post',
+   url : "/get_toggled_status",
+   contentType: 'application/json;charset=UTF-8',
+   data :  JSON.stringify({'status':current_status})
+ });
+ console.log(current_status);
+ console.log(status_a);
+  });
+ });
+ var current_status_2;
+ var data_1 = {'status_2':current_status_2}
+ $(".toggle").click(function(){
+ current_status_2 = $('#toggleswitch_pump2').is("checked");
+
+ status_a_2 = $('#toggleswitch_pump2').is("checked")
+ $.ajax({
+   type : 'post',
+   url : "/get_toggled_status",
+   contentType: 'application/json;charset=UTF-8',
+   data :  JSON.stringify({'status_pump2':current_status_2})
+ });
+ console.log(current_status_2);
+ console.log(status_a_2);
+  });
+ });
+
+});
+</script>
+</html>
